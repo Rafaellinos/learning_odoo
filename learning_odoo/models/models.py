@@ -18,7 +18,7 @@ from datetime import date
 #         self.value2 = float(self.value) / 100
 
 class AbstractModel(models.AbstractModel):
-    _name = 'cu200'
+    _name = 'test.abstract'
 
     def test(self):
         pass
@@ -31,6 +31,16 @@ class TestField(models.Model):
     _rec_name = 'sequence'
     _log_access = False
 
+    """
+        _rec_name = quando referenciado, qual campo mostrar
+        _log_acess = tira campos como create_date
+        _oder = ordena na tree pelo campo
+
+    """
+
+    test_rec = fields.Many2one(
+        string='Test rec',
+        comodel_name='test.fields')
 
     sequence = fields.Float('Sequência',(3,2))
 
