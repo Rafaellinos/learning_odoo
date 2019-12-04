@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="custom-addons/learning_odoo/.list">
+      <field name="name">custom-addons/learning_odoo/ list</field>
+      <field name="model">custom-addons/learning_odoo/.custom-addons/learning_odoo/</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="custom-addons/learning_odoo/.action_window">
+      <field name="name">custom-addons/learning_odoo/ window</field>
+      <field name="res_model">custom-addons/learning_odoo/.custom-addons/learning_odoo/</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="custom-addons/learning_odoo/.action_server">
+      <field name="name">custom-addons/learning_odoo/ server</field>
+      <field name="model_id" ref="model_custom-addons/learning_odoo/_custom-addons/learning_odoo/"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="custom-addons/learning_odoo/" id="custom-addons/learning_odoo/.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="custom-addons/learning_odoo/.menu_1" parent="custom-addons/learning_odoo/.menu_root"/>
+    <menuitem name="Menu 2" id="custom-addons/learning_odoo/.menu_2" parent="custom-addons/learning_odoo/.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="custom-addons/learning_odoo/.menu_1_list" parent="custom-addons/learning_odoo/.menu_1"
+              action="custom-addons/learning_odoo/.action_window"/>
+    <menuitem name="Server to list" id="custom-addons/learning_odoo/" parent="custom-addons/learning_odoo/.menu_2"
+              action="custom-addons/learning_odoo/.action_server"/>
+    -->
+  </data>
+</odoo>
