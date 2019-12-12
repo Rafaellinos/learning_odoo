@@ -2,6 +2,7 @@
 
 from odoo import models, fields, api
 
+from odoo.exceptions import ValidationError
 from random import choice
 from datetime import date
 
@@ -30,7 +31,15 @@ class TestField(models.Model):
     _order = 'sequence'
     _rec_name = 'sequence'
     _log_access = False
+    _inherits = {'res.partner': 'partner_id'} #<-delegation inheritance
+    """
+        With delegation, Partner fields are expososed as 'test.fields', but they are 
+        just being linked, so it is possible to use partner fields aswell.
+    """
 
+    #SQL contrainnsts = enforce database definition, in this case, to field name be unique
+    _sql_constraints = [
+        ('test_name_uniq', 'UNIQUE (name)', 'Random number must be unique')]
     """
         _rec_name = quando referenciado, qual campo mostrar
         _log_acess = tira campos como create_date
@@ -60,6 +69,8 @@ class TestField(models.Model):
         string='Random number',
         index=True)
 
+    something = fields.Char(
+        string='Type something')
 
     partner_id = fields.Many2one(
         string='Contato',
@@ -67,6 +78,15 @@ class TestField(models.Model):
 
     text = fields.Html(
         string='texto')
+
+    #if the record has less than 5 characters, raise ValidationError.
+    #if blank, will raise error because it will be False
+    #Apparently, it doesn't work with html fields
+    @api.constrains('something')
+    def _check_text_size(self):
+        for record in self:
+            if len(record.something) < 5:
+                raise ValidationError('Must have more than 5 characters')
 
     partner_ids = fields.One2many(
         string='Contatos',
