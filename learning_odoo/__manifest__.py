@@ -16,13 +16,11 @@
     'category': 'Uncategorized',
     'version': '0.1',
 
-    'depends': ['base'],
+    'depends': ['base','mail'],
 
-    #'data': [
-        # 'security/ir.model.access.csv',
-    #    'views/views.xml',
-    #    'views/templates.xml',
-    #],
+    'data': [
+        'views/views.xml',
+    ],
     # only loaded in demonstration mode
     #'demo': [
     #    'demo/demo.xml',

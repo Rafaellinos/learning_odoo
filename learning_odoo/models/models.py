@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 
 from odoo.exceptions import ValidationError
 from random import choice
@@ -31,7 +31,8 @@ class TestField(models.Model):
     _order = 'sequence'
     _rec_name = 'sequence'
     _log_access = False
-    _inherits = {'res.partner': 'partner_id'} #<-delegation inheritance
+    _inherit = ['mail.thread', 'mail.activity.mixin'] # prototype inheritance
+    #_inherits = {'res.partner': 'partner_id'} #<-delegation inheritance
     """
         With delegation, Partner fields are expososed as 'test.fields', but they are 
         just being linked, so it is possible to use partner fields aswell.
@@ -114,6 +115,19 @@ class TestField(models.Model):
         test = super(TestField, self).create(vals)
         test.name = self.check_exists(self.gerar_numero())
         return test
+
+    def raise_something(self):
+        raise ValidationError(_("Something wrong with you"))
+        return True
+
+    def create_partner(self): 
+        criado = self.env['test.fields'].sudo().create({
+            'something': 'bugabuga',
+            'selecao': 'test2',
+            'sequence': 12344,
+        })
+        for record in self:
+            record.test_rec = criado.id
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'

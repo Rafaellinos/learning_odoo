@@ -1,60 +1,66 @@
-<odoo>
+<odoo noupdate="1">
   <data>
-    <!-- explicit list view definition -->
-    <!--
-    <record model="ir.ui.view" id="custom-addons/learning_odoo/.list">
-      <field name="name">custom-addons/learning_odoo/ list</field>
-      <field name="model">custom-addons/learning_odoo/.custom-addons/learning_odoo/</field>
-      <field name="arch" type="xml">
-        <tree>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
-        </tree>
-      </field>
-    </record>
-    -->
+   <record id="test_model_view_tree" model = "ir.ui.view">
+            <field name="model">test.fields</field>
+            <field name="arch" type="xml">
+                <tree>
+                  <field name="name"/>
+                  <field name="sequence"/>
+                  <field name="selecao"/>
+                </tree>
+            </field>
+        </record>
 
-    <!-- actions opening views on models -->
-    <!--
-    <record model="ir.actions.act_window" id="custom-addons/learning_odoo/.action_window">
-      <field name="name">custom-addons/learning_odoo/ window</field>
-      <field name="res_model">custom-addons/learning_odoo/.custom-addons/learning_odoo/</field>
-      <field name="view_mode">tree,form</field>
-    </record>
-    -->
+        <record id="test_model_view_form" model = "ir.ui.view">
+            <field name="model">test.fields</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                      <button name="raise_something" string="Raise Warning" type="object"/>
+                      <button name="create_partner" string="Create record" type="object"/>
+                    </header>
+                    <sheet>
+                        <group col="2" string="Dados do Contrato">
+                            <group col="1">
+                                <field name="name"/>
+                                <field name="test_rec"/>
+                                <field name="sequence" invisible="1"/>
+                                <field name="selecao"/>
+                            </group>
+                            <group>
+                                <field name="something"/>
+                                <field name="partner_id"/>
+                                <field name="partner_ids"/>
+                                <field name="contatos_geral"/>
+                            </group>
+                        </group>
+                        <field name="text"/>
+                    </sheet>
+                    <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+                </form>
+            </field>
+        </record>
 
-    <!-- server action to the one above -->
-    <!--
-    <record model="ir.actions.server" id="custom-addons/learning_odoo/.action_server">
-      <field name="name">custom-addons/learning_odoo/ server</field>
-      <field name="model_id" ref="model_custom-addons/learning_odoo/_custom-addons/learning_odoo/"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": self._name,
-        }
-      </field>
-    </record>
-    -->
+        <record id="test_model_action_window" model="ir.actions.act_window">
+            <field name="name">TEST</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">test.fields</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Sem contratos para exibição.
+                </p>
+            </field>
+        </record>
 
-    <!-- Top menu item -->
-    <!--
-    <menuitem name="custom-addons/learning_odoo/" id="custom-addons/learning_odoo/.menu_root"/>
-    -->
-    <!-- menu categories -->
-    <!--
-    <menuitem name="Menu 1" id="custom-addons/learning_odoo/.menu_1" parent="custom-addons/learning_odoo/.menu_root"/>
-    <menuitem name="Menu 2" id="custom-addons/learning_odoo/.menu_2" parent="custom-addons/learning_odoo/.menu_root"/>
-    -->
-    <!-- actions -->
-    <!--
-    <menuitem name="List" id="custom-addons/learning_odoo/.menu_1_list" parent="custom-addons/learning_odoo/.menu_1"
-              action="custom-addons/learning_odoo/.action_window"/>
-    <menuitem name="Server to list" id="custom-addons/learning_odoo/" parent="custom-addons/learning_odoo/.menu_2"
-              action="custom-addons/learning_odoo/.action_server"/>
-    -->
+        <menuitem id="test_model_main_menu" name="TEST" sequence="-100" groups="base.group_user"/>
+
+        <menuitem id="test_model_second_menu" name="TEST" action="test_model_action_window" 
+                parent="learning_odoo.test_model_main_menu" sequence="1" groups="base.group_user"/>
   </data>
 </odoo>
