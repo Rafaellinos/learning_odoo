@@ -104,3 +104,24 @@ res.partner(15, 14, 13, 12, 11, 10, 9, 1)
 ######## SQL ##############
 
 active == false excluidos das querys
+
+###### recordset ##########
+Reco
+rs1 | rs2  = union set operation
+re1 + rs2 = addition set operation
+rs1 & rs2 = intersection set operation
+rs1 - rs2 = difference set operation
+
+Slice notation:
+
+rs[0] ou rs[-1], primeiro e último
+rs[1:] == rs - rs[0]
+
+Operações de adição e remoção de records:
+
+self.task_ids |= task1 # adiciona o record task1 se não estiver presente
+self.task_ids -= task1 # remove o record task1 do recordset, se estiver presente
+self.task_ids = self.task_ids[:-1] # remove o último record do recordset
+
+
+
