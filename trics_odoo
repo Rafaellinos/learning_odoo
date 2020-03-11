@@ -1,0 +1,106 @@
+##### models #######
+inherit = ['recname']
+
+_rec_name= nome do campo que se referencia essa tabela. Por default é o name
+_table = nome da tabela referenciada no banco de dados.
+_log_access=False : remove os campos como create_date e write_date
+
+models.Model <- classe.
+
+Abstract models = > sem dados armazenados. serve para ser usado misturando com outros models usando inheritance.
+
+
+##### commands ########
+
+ODOO important anotation:
+./odoo-bin scaffold /yourmodule_name
+
+-i <= reinstall module
+
+####### XML #######
+
+pag 188
+<act_window> is for the window action mode, ir.actions.act_window
+<menuitem> is for the menu items model, ir.ui.menu
+<report> is for the report action model, ir.actions.report.xml
+<template> is for QWeb templates stored in the model ir.ui.view
+
+<odoo noupdate="1"> permite que não seja recarregado no update
+
+######## função em xml######
+<function
+model="todo.task"
+name="action_set_lost"
+eval="[ref('crm_case_7'), ref('crm_case_9')
+, ref('crm_case_11'), ref('crm_case_12')]
+, {'install_mode': True}" />  função durante o carregamento.
+
+########## fields ###############
+onchange => só funciona no mesmo model e com os records do form
+depends => pode ser ativado chamando um model de outro model, não sendo limitado apenas ao atual.
+
+groups='base.group_user', (selection)state={'done':[('readonly',True)]} <= pode ser usando nos campos em .py
+
+perc_complete = fields.Float('% Complete', (x, y)) x=total numbers, y=decimal digits
+
+>>> from odoo import fields
+>>> fields.Date.today()
+datetime.date(2020, 3, 11)
+>>> fields.Datetime.now()
+datetime.datetime(2020, 3, 11, 10, 34, 6)
+>>> fields.Datetime.from_string('2017-11-21 23:11:55')
+datetime.datetime(2017, 11, 21, 23, 11, 55)
+
+to_string(value) -> converte a data or datetime obj em string no formato esperado pelo server.
+
+###### LOGS #############
+import logging
+_logger = logging.getLogger(__name__)
+
+_logger.debug('A DEBUG message')
+_logger.info('An INFO message')
+_logger.warning('A WARNING message')
+_logger.error('An ERROR message')
+
+####### ODOO SHELL ############
+# Toda mudança feita no shell precisa ser comitada para ter efeito
+
+./odoo-bin shell -d learning_odoo -r'odoo13' -w'odoo'
+
+self.env.cr.savepoint()
+self.env.cr.execute("SELECT email FROM res_parner WHERE id=1", ([1]))
+self.env.cr.commit()
+# self.env.cr.rollback() if necessary
+
+>>> self.env['res.partner'].search([('name', 'like', 'Ag')])
+res.partner(9, 31)
+>>> self.env['res.partner'].browse([9, 31])
+res.partner(9, 31)
+
+>>> from odoo import fields
+>>> fields.Datetime.now()
+'2017-11-21 23:11:55'
+>>> fields.Datetime.from_string('2017-11-21 23:11:55')
+datetime.datetime(2017, 11, 21, 23, 11, 55)
+
+>>> records = self.env['res.partner'].search([])
+>>> len(records)
+36
+>>> record1 = records.filtered(lambda r: r.name.startswith('A'))
+>>> record1
+res.partner(14, 35)
+>>> record2 = records.filtered('is_company')
+>>> record2
+res.partner(14, 10, 11, 15, 12, 13, 9, 1)
+>>> record2.mapped('name')
+['Azure Interior', 'Deco Addict', 'Gemini Furniture', 'Lumber Inc', 'Ready Mat', 'The Jackson Group', 'Wood Corner', 'YourCompany']
+>>> record2.mapped(lambda r: (r.id, r.name))
+[(14, 'Azure Interior'), (10, 'Deco Addict'), (11, 'Gemini Furniture'), (15, 'Lumber Inc'), (12, 'Ready Mat'), (13, 'The Jackson Group'), (9, 'Wood Corner'), (1, 'YourCompany')]
+>>> record2.sorted(key=lambda r: r.id, reverse=True)
+res.partner(15, 14, 13, 12, 11, 10, 9, 1)
+
+
+
+######## SQL ##############
+
+active == false excluidos das querys

@@ -6,6 +6,14 @@ from odoo.exceptions import ValidationError
 from random import choice
 from datetime import date
 
+import logging
+_logger = logging.getLogger(__name__)
+"""
+_logger.debug('A DEBUG message')
+_logger.info('An INFO message')
+_logger.warning('A WARNING message')
+_logger.error('An ERROR message')
+"""
 # class custom-addons/learning_odoo/(models.Model):
 #     _name = 'custom-addons/learning_odoo/.custom-addons/learning_odoo/'
 
@@ -86,8 +94,11 @@ class TestField(models.Model):
     @api.constrains('something')
     def _check_text_size(self):
         for record in self:
-            if len(record.something) < 5:
+            if not record.something:
+                raise ValidationError('The field Type something cannot be blank!')
+            elif len(record.something) < 5:
                 raise ValidationError('Must have more than 5 characters')
+        return True
 
     partner_ids = fields.One2many(
         string='Contatos',
@@ -99,8 +110,9 @@ class TestField(models.Model):
         'Referências')
 
     def check_exists(self,num):
-        found = self.env['test.fields'].search([('name', '=', num)])
+        found = self.env['test.fields'].search([('name', '=', num)], limit=1)
         if found:
+            _logger.info(f'the number {found} already exists, generating other')
             return self.check_exists(self.gerar_numero())
         return num
 
