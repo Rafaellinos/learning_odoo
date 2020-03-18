@@ -123,5 +123,46 @@ self.task_ids |= task1 # adiciona o record task1 se não estiver presente
 self.task_ids -= task1 # remove o record task1 do recordset, se estiver presente
 self.task_ids = self.task_ids[:-1] # remove o último record do recordset
 
+### xml-rpc connection #####
+### does not support None values!
+
+>>> from xmlrpc import client
+>>> srv = 'http://localhost:8069'
+>>> common = client.ServerProxy('%s/xmlrpc/2/common' % srv)
+>>> common.version()
+>>> uid = common.authenticate('learning_odoo', 'admin', 'admin', {})
+>>> uid # output 2
+>>> api = client.ServerProxy('%s/xmlrpc/2/object' % srv)
+>>> api.execute_kw('learning_odoo', 2, 'admin', 'res.partner', 'search_count', [[]]) # output 40
+>>> api.execute_kw('learning_odoo',2,'admin','res.partner','search',[[('name','=','Brandon Freeman')]]) # output 26
+>>> api.execute_kw('learning_odoo', 2, 'admin', 'res.partner', 'read', [[19]], {'fields': ['id', 'name']}) # output [{'id': 19, 'name': 'Floyd Steward'}]
+>>> api.execute_kw(db,uid,pwd,'res.partner','search_read',[[('name','=','Brandon Freeman')]],{'fields': ['id','name']}) # output [{'id': 26, 'name': 'Brandon Freeman'}]
+>>> api.execute_kw(db,uid,pwd,'res.partner','search_read',[[('name','=','Brandon Freeman')]]) # all fields
+>>> api.execute_kw(db, uid, pwd, 'res.partner','create', [{'name': 'Packt Pub'}])
+>>> api.execute_kw(db, uid, pwd, 'res.partner','write', [[46], {'name': 'Packt Publishing'}])
+>>> api.execute_kw(db, uid, pwd, 'res.partner','read', [[46], ['id', 'name']])
+>>> api.execute_kw(db, uid, pwd, 'res.partner','unlink', [[46]])
+
+    pip3 install --user erppeek  -> lib para abstração
+    pode ser usada:
+    m = api.model('res.partner')
+    m = api.ResPartner
+    m.count([('name', 'like', 'Agrolait%')]) # todos metodos
+    recs = m.browse([('name', 'like', 'Agrolait')])
+    recs.name
+    Pag 263
+
+erppeek para server side
+erppeek --server='http://localhost:8069' -d todo -u admin
+todo >>> model('res.users').count()
+3
+todo >>> rec = model('res.partner').browse(9)
+todo >>> rec.name
+
+manipulate modules:
+client.modules()
+client.install()
+client.upgrade()
+client.uninstall()
 
 
