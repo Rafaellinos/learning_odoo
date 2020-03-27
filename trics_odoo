@@ -105,6 +105,19 @@ res.partner(15, 14, 13, 12, 11, 10, 9, 1)
 
 active == false excluidos das querys
 
+root@f3f78b91b872:/# psql postgres -U odoo
+
+DELETE FROM website_visitor WHERE active = False;
+
+\c <DATA BASENAME>
+\dt # list all tables
+ALTER TABLE project_task_type DROP CONSTRAINT project_task_type_name_uniq;
+
+#postgres@user:/# psql -l # list dbs without connect with postgres
+#postgres@user:/# psql <DATABASE NAME> # connect with datbase
+
+
+
 ###### recordset ##########
 Reco
 rs1 | rs2  = union set operation
