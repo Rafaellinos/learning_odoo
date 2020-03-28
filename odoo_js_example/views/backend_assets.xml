@@ -1,0 +1,14 @@
+<odoo>
+    <record id="action_hello_world" model="ir.actions.client">                                        
+      <field name="name">Tutorial Demo</field>                                        
+      <field name="tag">odoo_js_example.action</field>                                    
+    </record>                                    
+    <menuitem name="Hello World" id="hello_world_menu_root" action="action_hello_world"/> 
+
+    <template id="assets_backend" name="hello_world assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/odoo_js_example/static/src/js/odoo_js_example.js"></script>
+            <link rel="stylesheet" type="text/css" href="/odoo_js_example/static/src/css/hello_world.css"/>
+        </xpath>
+    </template>
+</odoo>
