@@ -190,3 +190,10 @@ client.upgrade()
 client.uninstall()
 
 
+###### ODOO-bin command line
+
+update all -> -u all
+
+##### RUN BOT ####
+http://runbot.odoo.com
+https://runbot.odoo-community.org/runbot
