@@ -116,6 +116,17 @@ ALTER TABLE project_task_type DROP CONSTRAINT project_task_type_name_uniq;
 #postgres@user:/# psql -l # list dbs without connect with postgres
 #postgres@user:/# psql <DATABASE NAME> # connect with datbase
 
+###### Backup manual ######
+##### sudo su postgres
+##### createuser -s <mesmo nome do seu usuário>
+##### 'vole ao seu user'
+##### pg_dump -Fc BD_NAME > FILENAME.dump # -Fc format|custom para usar no pg_restore
+##### createdb --owner=USUARIO NOMEBD
+##### pg_restore --no-owner --role=USUARIO -d NOMEBD file_torestore.dump
+##### psql -l
+##### 'hora de restaurar o filestore, para ver onde está olhe no odoo.conf em data_dir = /local'
+##### 'entre nesse diretorio e copie a pasta filestore de backup dentro de filestore com o mesmo nome do bd criado para backup
+##### 'as pastas em filestore são armazenados em numero hexadecimais e os arquivos armazenados em hashs'
 
 
 ###### recordset ##########
