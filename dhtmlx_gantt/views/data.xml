@@ -1,0 +1,26 @@
+<odoo>
+    <!-- <record id="library_book_view_author" model="ir.ui.view">
+        <field name="name">asdasd</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <test>
+            </test>
+        </field>
+    </record> -->
+
+    <!-- <record id="project_task_gantt_test" model="ir.ui.view">
+        <field name="name">ganttasdkjasd</field>
+        <field name="model">project.task</field>
+        <field name="arch" type="xml">
+            <test>
+            </test>
+        </field>
+    </record> -->
+
+    <!-- <record id="action_project_show_gantt" model="ir.actions.client">
+        <field name="tag">project_show_gantt</field>
+        <field name="name">Project Gantt</field>
+    </record> -->
+
+
+</odoo>

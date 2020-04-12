@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+        <template id="gantt_timeline_assets" name="gantt assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/dhtmlx_gantt/static/src/js/gantt_controller.js"/>
+                <script type="text/javascript" src="/dhtmlx_gantt/static/src/js/gantt_model.js"/>
+                <script type="text/javascript" src="/dhtmlx_gantt/static/src/js/gantt_renderer.js"/>
+                <script type="text/javascript" src="/dhtmlx_gantt/static/src/js/gantt_view.js"/>
+
+                <script src="/dhtmlx_gantt/static/lib/dhtmlxgantt.js"/>
+                <link rel="stylesheet" href="/dhtmlx_gantt/static/lib/dhtmlxgantt_material.css"/>
+                <script src="/dhtmlx_gantt/static/lib/dhtmlxgantt_drag_timeline.js"/>
+                <script src="/dhtmlx_gantt/static/lib/dhtmlxgantt_tooltip.js"/>
+                <script src="/dhtmlx_gantt/static/lib/dhtmlxgantt_marker.js"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>
