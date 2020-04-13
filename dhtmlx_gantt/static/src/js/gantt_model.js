@@ -28,9 +28,7 @@ odoo.define('dhtmlx_gantt.Model', function (require) {
                 'parent': params.parent || null
             }
             //load map fields
-            
-            console.log("map");
-            console.log(params);
+    
             return this._fetchData();
         },
         reload: function (handle, params) {
@@ -38,6 +36,7 @@ odoo.define('dhtmlx_gantt.Model', function (require) {
             if ('domain' in params) {
                 this.domain = params.domain;
             }
+            console.log(this.domain);
             return this._fetchData();
         },
         _fetchData: function () {
@@ -59,23 +58,28 @@ odoo.define('dhtmlx_gantt.Model', function (require) {
             });
         },
         ////TODO pegar os parentes filtrados por ID para mostrar no gráfico
-        _get_parent: function () {
+        _get_parent: function (parent) {
             var self = this;
             return this._rpc({
-                model: this.modelName, //model parent
+                model: 'ir.model.fields', //model parent
                 method: 'search_read',
                 kwargs: {
-                    domain: [('id')]
+                    domain: [['name','=', parent]],
+                    fields: ['relation'],
+                    limit: 1
                 },
-            }).then(function(records) {
-
+            }).then(function(comodel_name) {
+                if (comodel_name) {
+                    return comodel_name[0]['relation']
+                }
+                else {
+                    return null
+                }
             });
         },
         //TODO
         create_gantt_date: function(records) {
-            console.log('records from model: ');
-            console.log(records);
-            console.log(this.params);
+            
             var data = []
 
             var formatFunc = gantt.date.str_to_date("%Y-%m-%d %h:%i:%s", true);
@@ -96,9 +100,13 @@ odoo.define('dhtmlx_gantt.Model', function (require) {
                 }
                 return 0
             };
-            //console.log(this.options_map);
+            console.log(this.options_map);
+            if (this.options_map['parent']){
+                comodel_name = this._get_parent(this.options_map['parent']);
+                
+            };
             records.forEach(record => {
-                if (record['date_assign']) {
+                if (record[this.options_map['date_start']]) {
                     data.push(
                         {
                             'id': record['id'],
@@ -108,7 +116,7 @@ odoo.define('dhtmlx_gantt.Model', function (require) {
                             'duration': get_duration(record[this.options_map['date_start']], record[this.options_map['date_end']]),
                             'model': this.modelName,
                             'order': record['id'],
-                            'parent': record[this.options_map['parent']]
+                            'parent': record[this.options_map['parent']][0]
                         }
                     );
                 }

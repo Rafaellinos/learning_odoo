@@ -2,7 +2,7 @@
 <templates xml:space="preserve">
     <t t-name="lliege_timeline.ganttrender">
         <div id="o_root_gantt">
-            <div class="gantt_dhtml" style="width:100%; height:100%; margin-top: 10px; position:absolute;"></div>
+            <div class="gantt_dhtml" style="width:100%; height:100%;position:absolute;"></div>
         </div>
     </t>
 </templates>
